@@ -38,6 +38,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="p1y-Ku-BJR"/>
                     <connections>
+                        <outlet property="cameraButton" destination="WjN-a4-XBM" id="JsC-9R-BdM"/>
                         <outlet property="myMapView" destination="JMZ-pU-Z79" id="7cW-P0-qot"/>
                         <segue destination="dhm-cj-dCe" kind="show" identifier="fullImageSegue" id="j47-0S-4ot"/>
                         <segue destination="Fvc-Fc-ega" kind="show" identifier="tagSegue" id="wtL-Hs-mhM"/>

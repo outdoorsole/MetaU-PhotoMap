@@ -12,6 +12,7 @@
 @interface PhotoMapViewController ()
 
 @property (weak, nonatomic) IBOutlet MKMapView *myMapView;
+@property (weak, nonatomic) IBOutlet UIButton *cameraButton;
 
 @end
 
