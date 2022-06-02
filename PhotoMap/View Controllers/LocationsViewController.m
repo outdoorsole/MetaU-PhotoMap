@@ -49,6 +49,7 @@ static NSString * const clientSecret = @"W2AOE1TYC4MHK5SZYOUGX0J3LVRALMPB4CXT3ZH
     
     // TODO: get one element from the "results" array, and pass it to the cell
     
+    [cell updateWithLocation:self.results[indexPath.row]];
     
     return cell;
 }
