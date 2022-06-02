@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 #import "LocationsViewController.h"
 
-@interface PhotoMapViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, LocationsViewControllerDelegate>
+@interface PhotoMapViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, LocationsViewControllerDelegate, MKMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *myMapView;
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
@@ -23,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.myMapView.delegate = self;
 
     MKCoordinateRegion sfRegion = MKCoordinateRegionMake(CLLocationCoordinate2DMake(37.783333, -122.416667), MKCoordinateSpanMake(0.1, 0.1));
     [self.myMapView setRegion:sfRegion animated:false];
@@ -64,6 +66,7 @@
     [self performSegueWithIdentifier:@"tagSegue" sender:nil];
 }
 
+
 /*
 #pragma mark - Navigation
 
@@ -79,5 +82,36 @@
             vc.delegate = self;
         }
 }
+
+- (void)locationsViewController:(LocationsViewController *)controller didPickLocationWithLatitude:(NSNumber *)latitude longitude:(NSNumber *)longitude {
+    NSLog(@"%@", latitude);
+    NSLog(@"%@", longitude);
+    
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude.floatValue, longitude.floatValue);
+    
+    MKCoordinateRegion region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(latitude.floatValue, longitude.floatValue), MKCoordinateSpanMake(0.1, 0.1));
+    [self.myMapView setRegion:region animated:true];
+
+    
+    MKPointAnnotation *annotation = [MKPointAnnotation new];
+    annotation.coordinate = coordinate;
+    annotation.title = @"Picture!";
+    [self.myMapView addAnnotation:annotation];
+    
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+     MKPinAnnotationView *annotationView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
+     if (annotationView == nil) {
+         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Pin"];
+         annotationView.canShowCallout = true;
+         annotationView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 50.0, 50.0)];
+     }
+
+     UIImageView *imageView = (UIImageView*)annotationView.leftCalloutAccessoryView;
+     imageView.image = [UIImage imageNamed:@"camera-icon"];
+
+     return annotationView;
+ }
 
 @end

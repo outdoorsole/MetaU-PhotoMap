@@ -63,6 +63,8 @@ static NSString * const clientSecret = @"W2AOE1TYC4MHK5SZYOUGX0J3LVRALMPB4CXT3ZH
     NSLog(@"%@, %@", lat, lng);
     
     [self.delegate locationsViewController:self didPickLocationWithLatitude:lat longitude:lng];
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
